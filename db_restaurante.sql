@@ -7,50 +7,55 @@ USE db_restaurante;
 /* Tabla de roles */
 CREATE TABLE tbl_roles(
     id_roles INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    nombre_rol VARCHAR(20) NOT NULL
+    nombre_rol VARCHAR(255) NOT NULL
 );
 
 /* Tabla de usuarios */
 CREATE TABLE tbl_users(
     id_user INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    user VARCHAR(20) NOT NULL,
-    nombre VARCHAR(50) NOT NULL,
-    apellido1 VARCHAR(50) NOT NULL,
-    apellido2 VARCHAR(50),
-    contra VARCHAR(120),
-    salario INT(6) NOT NULL,
-    correo VARCHAR(30) NOT NULL,
-    telefono INT(9) NOT NULL,
-    DNI VARCHAR(9) NOT NULL,
+    user VARCHAR(255) NOT NULL,
+    nombre VARCHAR(255),
+    apellido1 VARCHAR(255),
+    apellido2 VARCHAR(255),
+    contra VARCHAR(255),
+    correo VARCHAR(255) NOT NULL,
+    telefono INT(255) NOT NULL,
     rol INT NOT NULL
 );
 
 /* Tabla de tipos de sala que tenemos */
 CREATE TABLE tbl_tipos_salas(
     id_tipos INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    nombre_tipos VARCHAR(20) NOT NULL,
+    nombre_tipos VARCHAR(255),
     aforo INT (2)
 );
 
 /* Tabla numero de salas */
 CREATE TABLE tbl_salas(
     id_sala INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id_tipos_sala INT NOT NULL,
-    nombre_sala VARCHAR(20) NOT NULL
+    id_tipos_sala INT,
+    nombre_sala VARCHAR(255)
 );
 /* Tabla de mesas */
 CREATE TABLE tbl_mesas(
     id_mesa INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    nombre_mesa VARCHAR(20) NOT NULL,
-    sillas INT (2) NOT NULL,
-    id_estado_mesa INT NOT NULL,
+    nombre_mesa VARCHAR(255),
+    sillas INT NULL,
+    id_estado_mesa INT,
     id_camarero INT,
-    id_sala_mesa INT NOT NULL
+    id_sala_mesa INT
 );
 /* Tabla de estado para la mesa */
 CREATE TABLE tbl_estado(
     id_estado INT NOT NULL PRIMARY KEY,
-    estado_nombre VARCHAR(20) NOT NULL
+    estado_nombre VARCHAR(255)
+);
+
+CREATE TABLE tbl_historial (
+    id_historial INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado VARCHAR(255)L,
+    id_mesa INT,
 );
 
 ALTER TABLE tbl_mesas
@@ -78,17 +83,12 @@ ADD CONSTRAINT fk_mesas_estado
 FOREIGN KEY (id_estado_mesa)
 REFERENCES tbl_estado(id_estado);
 
-CREATE TABLE tbl_historial (
-    id_historial INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id_usuario INT NOT NULL,
-    id_mesa INT NOT NULL,
-    id_sala INT NOT NULL,
-    fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado VARCHAR(20) NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES tbl_users(id_user),
-    FOREIGN KEY (id_mesa) REFERENCES tbl_mesas(id_mesa),
-    FOREIGN KEY (id_sala) REFERENCES tbl_salas(id_sala)
-);
+ALTER TABLE tbl_historial
+ADD CONSTRAINT fk_mesas_historial
+FOREIGN KEY (id_mesa)
+REFERENCES tbl_mesas(id_mesa);
+
+
 /*_________________________________ Roles _________________________________*/
 INSERT INTO tbl_roles VALUES (1,'admin');
 INSERT INTO tbl_roles VALUES (2,'camarero');
@@ -115,19 +115,32 @@ INSERT INTO tbl_salas VALUES (7,3,'2');
 INSERT INTO tbl_salas VALUES (8,3,'3');
 INSERT INTO tbl_salas VALUES (9,3,'4');
 /* _________________________________ Usuarios _________________________________*/
-INSERT INTO tbl_users VALUES (1,'Admin', 'Admin', 'Supremo', '', '$2y$10$eQV9jOJPHQq9X/gY.LUCb.LxlmQaSwyHLOT88AEyQ/55UggDpEbd6', 10000, 'admin@gmail.com', 123456789, '12345678A', 1);
-INSERT INTO tbl_users VALUES (2,'Alberto', 'Hank', 'Bermejo', 'Nuñez', '$2y$10$AaLco/MRdphg960EbWCmkO40QRcBTrOlcVOlmT3sxpxaBoOKp.E1q', 2000, 'abermejo@escolagoar.cat', 690621200, '12345679A', 2);
-INSERT INTO tbl_users VALUES (3,'Olga', 'Olga','Clemente', 'Molina', '$2y$10$AaLco/MRdphg960EbWCmkO40QRcBTrOlcVOlmT3sxpxaBoOKp.E1q', 2000, 'olga@gmail,com', 690621211, '12345678F', 2);
-INSERT INTO tbl_users VALUES (4,'Jin', 'Ying','Jinquan', '', '$2y$10$AaLco/MRdphg960EbWCmkO40QRcBTrOlcVOlmT3sxpxaBoOKp.E1q', 2000, 'jin@gmail.com', 690621222, '12345699J', 2);
-INSERT INTO tbl_users VALUES (5,'Sergio', 'Sergio','Callejas', 'Martos', '$2y$10$AaLco/MRdphg960EbWCmkO40QRcBTrOlcVOlmT3sxpxaBoOKp.E1q', 2000, 'callejas@gmail.com', 690621233, '12345679C', 2);
-INSERT INTO tbl_users VALUES (6,'Test', 'Test','Aplication', 'Test', '$2y$10$pv3fXUn09XYAbgYONE75Yuqnp2vx2FLgE9h2H3yFqJNcMAMAsCccu', 2000, 'test@gmail.com', 690621233, '12345679C', 2);
 
+CREATE TABLE tbl_users(
+    id_user INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    user VARCHAR(255) NOT NULL,
+    nombre VARCHAR(255),
+    apellido1 VARCHAR(255),
+    apellido2 VARCHAR(255),
+    contra VARCHAR(255),
+    correo VARCHAR(255) NOT NULL,
+    telefono INT(255) NOT NULL,
+    rol INT NOT NULL
+);
+
+INSERT INTO tbl_users VALUES (1,'Admin', 'Admin', 'Supremo', '', '$2y$10$eQV9jOJPHQq9X/gY.LUCb.LxlmQaSwyHLOT88AEyQ/55UggDpEbd6', 'admin@gmail.com', 123456789, 1);
+INSERT INTO tbl_users VALUES (2,'Alberto', 'Hank', 'Bermejo', 'Nuñez', '$2y$10$AaLco/MRdphg960EbWCmkO40QRcBTrOlcVOlmT3sxpxaBoOKp.E1q', 'abermejo@escolagoar.cat', 690621200, 2);
+INSERT INTO tbl_users VALUES (3,'Olga', 'Olga','Clemente', 'Molina', '$2y$10$AaLco/MRdphg960EbWCmkO40QRcBTrOlcVOlmT3sxpxaBoOKp.E1q', 'olga@gmail,com', 690621211, 2);
+INSERT INTO tbl_users VALUES (4,'Jin', 'Lin', 'Jinquan', '', '$2y$10$AaLco/MRdphg960EbWCmkO40QRcBTrOlcVOlmT3sxpxaBoOKp.E1q', 'jin@gmail.com', 690621222, 2);
+INSERT INTO tbl_users VALUES (5,'Sergio', 'Sergio','Callejas', 'Martos', '$2y$10$AaLco/MRdphg960EbWCmkO40QRcBTrOlcVOlmT3sxpxaBoOKp.E1q', 'callejas@gmail.com', 690621233, 2);
+INSERT INTO tbl_users VALUES (6,'Test', 'Test','Aplication', 'Test', '$2y$10$pv3fXUn09XYAbgYONE75Yuqnp2vx2FLgE9h2H3yFqJNcMAMAsCccu', 'test@gmail.com', 690621233, 2);
 
 /*_________________________________ Mesas de sala privada _________________________________*/
 INSERT INTO tbl_mesas VALUES (1,'Sp1_M1',16, 2, NULL, 6);
 INSERT INTO tbl_mesas VALUES (2,'Sp2_M2',16, 2, NULL, 7);
 INSERT INTO tbl_mesas VALUES (3,'Sp3_M3',16, 2, NULL, 8);
 INSERT INTO tbl_mesas VALUES (4,'Sp4_M4',16, 2, NULL, 9);
+
 /*_________________________________ Mesas de Terraza _________________________________*/
 /* Sala terraza 1 */
 INSERT INTO tbl_mesas VALUES (5, 'T1_M5', 4, 2, NULL, 1);
@@ -150,6 +163,7 @@ INSERT INTO tbl_mesas VALUES (19, 'T3_M19', 4, 2, NULL, 3);
 INSERT INTO tbl_mesas VALUES (20, 'T3_M20', 4, 2, NULL, 3);
 INSERT INTO tbl_mesas VALUES (21, 'T3_M21', 4, 2, NULL, 3);
 INSERT INTO tbl_mesas VALUES (22, 'T3_M22', 4, 2, NULL, 3);
+
 /*_________________________________ Mesas del comedor _________________________________*/
 
 /* Mesas de comdeor1 de 2 personas */

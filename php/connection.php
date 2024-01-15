@@ -1,8 +1,8 @@
 <?php
 
    $dbserver = "localhost";
-   $dbuser = "root";
-   $dbpwd = "";
+   $dbuser = "zorrito";
+   $dbpwd = "QWEqwe123";
    $dbbasedatos = "db_restaurante";
 
 
