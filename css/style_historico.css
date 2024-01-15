@@ -1,0 +1,113 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url(../images/fondo.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* TABLA HISTÓRICO */
+table {
+  width: 100%;
+  text-align: center;
+  border: 1px solid #333333;
+}
+
+table th {
+  background-color: rgb(37, 38, 40);
+  color: white;
+  padding: 10px;
+}
+
+table td {
+  padding: 5px 10px;
+}
+
+table tr {
+  background-color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: rgb(217, 217, 217);
+  cursor: pointer;
+}
+
+.statistics-container {
+  padding: 0px 20px;
+  margin: 25px 0px;
+  height: 85vh;
+}
+
+/* TABLA SCROLLBAR */
+.statistics-list-container {
+  max-height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.statistics-list-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+.statistics-list-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.statistics-list-container::-webkit-scrollbar-thumb {
+  background: rgb(13, 23, 35);
+  border-radius: 5px;
+}
+
+.statistics-list-container::-webkit-scrollbar-thumb:hover {
+  background: rgb(33, 48, 65);
+}
+
+/* BOTÓN DE RETURN A PÁGINA HOME */
+.return-button {
+  background-color: rgb(37, 38, 40);
+  color: white;
+  padding: 11px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.return-button {
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.responsive-flex {
+  display: flex;
+  gap: 10px;
+  min-height: 40px;
+  flex-flow: row wrap;
+  margin-bottom: 20px;
+  align-items: center;
+  align-content: center;
+}
+
+#logo{
+  margin-left: 450px;
+}
+
+/* ----------------------------------------------------------------------------------- */
+
+/* Media query para pantallas de 400x658 */
+@media screen and (max-width: 600px) {
+  #logo {
+    margin-left: 50px;
+  }
+}
