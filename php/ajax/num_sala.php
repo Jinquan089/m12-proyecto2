@@ -21,7 +21,7 @@ try {
 
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $options = '<option value="nu">Seleccione un número</option>';
+    $options = '<option selected disabled>Seleccione una sala</option>';
     foreach ($result as $row) {
         $num_sala = $row['nombre_sala'];
         $options .= '<option value="' . $num_sala . '">' . $num_sala . '</option>';

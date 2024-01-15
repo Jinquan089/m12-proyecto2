@@ -1,5 +1,4 @@
-/*__________________________________________________________________*/
-/* TIPO DE SALAS */
+/*______________________________________TIPO SALA______________________________________*/
 document.addEventListener("DOMContentLoaded", function() {
     var resultado = document.getElementById('dropdown1');
     var ajax = new XMLHttpRequest();
@@ -85,9 +84,71 @@ function num_sala_silla(valor){
         }
     }
     ajax4.send(formdata4);
+/* LEYENDA */
+    var formdata5 = new FormData();
+    formdata5.append('tipo_sala',valor);
+    var resultado5 = document.getElementById('leyenda');
+    var ajax5 = new XMLHttpRequest();
+    ajax5.open('POST', '../php/ajax/leyenda.php');
+    ajax5.onload = function(){
+        if(ajax5.status == 200){
+            resultado5.innerHTML = "";
+            var json5 = JSON.parse(ajax5.responseText);
+            resultado5.innerHTML = json5;
+        } else{
+            resultado5.innerText = "Error"; 
+        }
+    }
+    ajax5.send(formdata5);
 
 }
-/*__________________________________________________________________*/
+/*______________________________________ACABA EL TIPO SALA______________________________________*/
+
+var numsala = document.getElementById('dropdown2');
+var mesas = document.getElementById('dropdown3');
+var estados = document.getElementById('dropdown4');
+
+numsala.addEventListener('change', actualizarLeyenda);
+mesas.addEventListener('change', actualizarLeyenda);
+estados.addEventListener('change', actualizarLeyenda);
+
+function actualizarLeyenda() {
+    var saladato = tiposala.value;
+    var numsaladato = numsala.value;
+    var mesadato = mesas.value;
+    var estadodato = estados.value;
+    leyenda(saladato, numsaladato, mesadato, estadodato);
+}
+
+function leyenda(valor1, valor2, valor3, valor4) {
+    var resultado = document.getElementById('leyenda');
+    var formdata = new FormData();
+    if (valor1 && valor1 !== "Seleccione una sala") {
+        formdata.append('tipo_sala', valor1);
+    }
+    if (valor2 && valor2 !== "Seleccione una sala") {
+        formdata.append('num_sala', valor2);
+    }
+    if (valor3 && valor3 !== "Seleccione una mesa") {
+        formdata.append('mesa', valor3);
+    }
+    if (valor4 && valor4 !== "Seleccione el estado") {
+        formdata.append('estado', valor4);
+    }
+    var ajax = new XMLHttpRequest();
+    ajax.open('POST', '../php/ajax/leyenda.php');
+    ajax.onload = function(){
+        if(ajax.status == 200){
+            resultado.innerHTML = "";
+            var json = JSON.parse(ajax.responseText);
+            console.log(json);
+            resultado.innerHTML = json;
+        } else{
+            resultado.innerText = "Error"; 
+        }
+    }
+    ajax.send(formdata);
+}
 
 /* var btnfiltros = document.getElementById("btnfiltros");
 btnfiltros.addEventListener('click', (event)=> {
