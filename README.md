@@ -25,10 +25,3 @@ Al ser un proyecto sin registro, contamos con un usuario de prueba:
 _**Name:** Test_
 
 _**Password:** TestAplication_
-
-## Autores ✒
-
-* **Jinquan Lin** - *Backend* - "Cohesionador"
-* **Alberto Bermejo Núñez** - *Backend* - "Impulsor"
-* **Sergio Callejas Martos** - *Frontend* - "Finalizador"
-* **Olga Clemente Molina** - *Frontend* - "Coordinadora"
