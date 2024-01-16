@@ -1,69 +1,104 @@
 <?php
-  if (isset($_POST['sala']) && ((isset($_POST['num_sala']) || (isset($_POST['mesa']) || (isset($_POST['estado'])))))) {
+  session_start();
+  include '../connection.php';
+  if (!isset($_SESSION["user"])) {
+      header('Location: ./cerrar.php');
+      exit();
+  }
+  if (isset($_POST['tipo_sala']) && ((isset($_POST['num_sala']) || (isset($_POST['mesa']) || (isset($_POST['estado'])))))) {
     // Obtener el valor del parámetro 'Sala'
-    $tipoSala = $_POST['sala'];
+    $tipoSala = $_POST['tipo_sala'];
+
     // Construir la consulta SQL basada en los filtros proporcionados
     $sql = "SELECT id_mesa, nombre_mesa, sillas, estado_nombre FROM tbl_tipos_salas tsa 
           INNER JOIN tbl_salas sa ON tsa.id_tipos = sa.id_tipos_sala 
           INNER JOIN tbl_mesas me ON sa.id_sala = me.id_sala_mesa 
           INNER JOIN tbl_estado esta ON me.id_estado_mesa = esta.id_estado
           WHERE nombre_tipos = :tipo_sala";
-    // Definir un array para manejar las vinculaciones de parámetros
-    $params = [":tipo_sala" => $tipoSala];
 
-    // Definir los filtros y agregar a la consulta y al array de parámetros
-    $filtros = ["num_sala", "mesa", "estado"];
-    foreach ($filtros as $filtro) {
-        if (isset($_POST[$filtro]) && $_POST[$filtro] != "nu") {
-            $sql .= " AND $filtro = :$filtro";
-            $params[":$filtro"] = $_POST[$filtro];
-        }
+    if (isset($_POST['num_sala'])) {
+        $numSala = $_POST['num_sala'];
+        $sql .= " AND nombre_sala = :num_sala";
+    }
+
+    if (isset($_POST['mesa'])) {
+        $mesa = $_POST['mesa'];
+        $sql .= " AND sillas = :mesa";
+    }
+
+    if (isset($_POST['estado'])) {
+        $estado = $_POST['estado'];
+        $sql .= " AND estado_nombre = :estado";
     }
 
     $sql .= " ORDER BY id_mesa ASC;";
-
     // Preparar la consulta
     $stmt = $conn->prepare($sql);
 
     // Hacer las vinculaciones de parámetros usando el array
-    foreach ($params as $param => &$value) {
-        $stmt->bindParam($param, $value);
+    if (isset($tipoSala) && isset($numSala) && !isset($mesa) && !isset($estado)) {
+      /* Filtro de solo tipo de sala y numero sala */
+      $stmt->bindParam(":tipo_sala", $tipoSala);
+      $stmt->bindParam(":num_sala", $numSala);
+
+    } else if (isset($tipoSala) && isset($mesa) && !isset($numSala) && !isset($estado)) {
+      /* Filtro de solo tipo de sala y mesas */
+      $stmt->bindParam(":tipo_sala", $tipoSala);
+      $stmt->bindParam(":mesa", $mesa);
+
+    } elseif (isset($tipoSala) && isset($estado) && !isset($numSala) && !isset($mesa)) {
+      /* Filtro de solo tipo de sala y estado */
+      $stmt->bindParam(":tipo_sala", $tipoSala);
+      $stmt->bindParam(":estado", $estado);
+
+    } elseif (isset($tipoSala) && isset($numSala) && isset($mesa) && !isset($estado)) {
+      /* Filtro de solo tipo de sala, numero de sala y mesa */
+      $stmt->bindParam(":tipo_sala", $tipoSala);
+      $stmt->bindParam(":num_sala", $numSala);
+      $stmt->bindParam(":mesa", $mesa);
+
+    } elseif (isset($tipoSala) && isset($mesa) && isset($estado) && !isset($numSala)) {
+      /* Filtro de solo tipo de sala, mesa y estado de las mesas */
+      $stmt->bindParam(":tipo_sala", $tipoSala);
+      $stmt->bindParam(":mesa", $mesa);
+      $stmt->bindParam(":estado", $estado);
+
+    } elseif (isset($tipoSala) && isset($numSala) && isset($estado) && !isset($mesa)) {
+      /* Filtro de solo tipo de sala, numero de sala y estado de las mesas */
+      $stmt->bindParam(":tipo_sala", $tipoSala);
+      $stmt->bindParam(":num_sala", $numSala);
+      $stmt->bindParam(":estado", $estado);
+
+    } else {
+      /* Filtro de todo */
+      $stmt->bindParam(":tipo_sala", $tipoSala);
+      $stmt->bindParam(":num_sala", $numSala);
+      $stmt->bindParam(":mesa", $mesa);
+      $stmt->bindParam(":estado", $estado);
     }
 
     $stmt->execute();
     $resultadoMesa = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if (count($resultadoMesa) > 0) {
+      $options = "";
       foreach ($resultadoMesa as $fila) {
         $tipo_mesa = $fila['sillas'];
         $nombre_mesa = $fila['nombre_mesa'];
-        $estado = $fila['estado_nombre'];
+        $estado1 = $fila['estado_nombre'];
         $id_mesa = $fila['id_mesa'];
-        if ($estado == 'Ocupado') {
+        if ($estado1 == 'Ocupado') {
           $clase_circulo = '../images/table-ocuped.svg';
         } else {
           $clase_circulo = '../images/table-libre.svg';
         }
-        $link = './mesa/ocupada.php?id_mesa=' . $id_mesa;
-        echo "<input type='hidden' name='sala' value='$tipoSala'>"
-        ?>
-
-            
-            <input type="hidden" name="num_sala" value="<?php echo $_POST['num_sala']; ?>">
-            <input type="hidden" name="mesa" value="<?php echo $_POST['mesa']; ?>">
-            <input type="hidden" name="estado" value="<?php echo $_POST['estado']; ?>">
-            <input type="hidden" name="id_mesa" value="<?php echo $id_mesa; ?>">
-            <a class="numero-mesa">
-              <?php echo $tipo_mesa; ?>
-            </a>
-            <button class="button-mesa" type="submit"><img src="<?php echo $clase_circulo; ?>" style="height: 190px;"></button>
-            <a class="nombre-mesa">
-              <?php echo $nombre_mesa; ?>
-            </a>
-    <?php
-        // Cierra el bucle foreach
+        $options .= "<div class='contenedor-mesas'>";
+        $options .= "<p class='numero-mesa'>$tipo_mesa</p>";
+        $options .= "<button class='button-mesa' name='btnenviarid' id='$id_mesa'><img src='$clase_circulo' style='height: 190px;'></button>";
+        $options .= "<p class='nombre-mesa'>$nombre_mesa</p></div>";
       }
+      echo json_encode($options);
     } else {
-      echo "<div class='container-error'>
-            <div class='text-error'>No hay ninguna mesa en ese estado.</div></div>";
+      $options = "<div class='container-error'><div class='text-error'>No hay ninguna mesa en ese estado.</div></div>";
+      echo json_encode($options);
     }
 }

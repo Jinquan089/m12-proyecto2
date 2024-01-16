@@ -18,7 +18,7 @@ $user = $_SESSION['user'];
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
   integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -67,7 +67,7 @@ $user = $_SESSION['user'];
     <!-- Contenedor filtros -->
     <div class="container-dropdown">
       <!-- Comienzo del formulario de filtros -->
-      <form class="formulario-filtros" action="./home.php" method="get" id="nocargar">
+      <form class="formulario-filtros" method="post" id="nocargar">
         <div class="dropdown">
           <label for="dropdown1">Sala</label>
           <!-- Selector para sala -->
@@ -97,7 +97,7 @@ $user = $_SESSION['user'];
           </select>
         </div>
         <div class="dropdown">
-          <button type="submit" class="aplicar_filtros">Aplicar filtros</button>
+          <button type="submit" class="aplicar_filtros">Limpiar Filtros</button>
         </div>
       </form>
     </div>
@@ -110,11 +110,7 @@ $user = $_SESSION['user'];
       </div>
     </div>
     <div id="fondo_sala" class="container-mapa-mesas">
-      <!-- Contenedor mapa mesas -->
       <div id="mapa">
-        <div class="contenedor-mesas">
-          <form action="./mesa/ocupada.php" method="get" id="frmMesas"></form>
-        </div>
       </div>
     </div>
   </div>

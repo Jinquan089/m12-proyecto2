@@ -44,7 +44,7 @@ include './connection.php';
                         INNER JOIN tbl_salas sa ON sa.id_sala = hi.id_sala
                         INNER JOIN tbl_tipos_salas tisa ON tisa.id_tipos = sa.id_tipos_sala";
 
-                        $stmt1 = $pdo->prepare($selesala);
+                        $stmt1 = $conn->prepare($selesala);
                         $stmt1->execute();
                         $resultsala = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
@@ -53,12 +53,11 @@ include './connection.php';
                                 $selecount = "SELECT me.nombre_mesa FROM tbl_historial hi
                                 INNER JOIN tbl_mesas me ON me.id_mesa = hi.id_mesa
                                 INNER JOIN tbl_salas sa ON sa.id_sala = hi.id_sala
-                                INNER JOIN tbl_tipos_salas tisa ON tisa.id_tipos = sa.id_tipos_sala WHERE hi.estado = 'Ocupado' AND me.nombre_mesa = ?";
+                                INNER JOIN tbl_tipos_salas tisa ON tisa.id_tipos = sa.id_tipos_sala WHERE hi.estado = 'Ocupado' AND me.nombre_mesa = :mesa";
 
                                 $stmt2 = $pdo->prepare($selecount);
-                                $stmt2->bindParam(1, $row['nombre_mesa'], PDO::PARAM_STR);
+                                $stmt2->bindParam(":mesa", $row['nombre_mesa']);
                                 $stmt2->execute();
-
                                 $count = $stmt2->rowCount();
 
                                 echo "<tr>";

@@ -53,7 +53,8 @@ CREATE TABLE tbl_estado(
 
 CREATE TABLE tbl_historial (
     id_historial INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_hora_ocupado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_hora_libre TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     estado VARCHAR(255)L,
     id_mesa INT,
 );
