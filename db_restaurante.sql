@@ -60,6 +60,17 @@ CREATE TABLE tbl_historial (
     id_mesa INT
 );
 
+CREATE TABLE tbl_reserva (
+    id_reserva INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    fecha_hora_reserva TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    duracion INT,
+    num_personas INT,
+    id_user_reserva INT,
+    id_mesa_reservada INT,
+    FOREIGN KEY (id_user_reserva) REFERENCES tbl_users(id_user),
+    FOREIGN KEY (id_mesa_reservada) REFERENCES tbl_mesas(id_mesa)
+);
+
 ALTER TABLE tbl_mesas
 ADD CONSTRAINT fk_salas_mesas
 FOREIGN KEY (id_sala_mesa)

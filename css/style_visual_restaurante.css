@@ -297,10 +297,27 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
-    margin-left: 600px;
+    margin-left: 1vh;
   }
 
   .historico:hover {
+    background-color: #2d2d2d;
+    color: white;
+  }
+
+  .reserva{
+    padding: 20px 25px;
+    background-color: #d3d3d3e8;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-left: 50vh;
+  }
+
+  .reserva:hover {
     background-color: #2d2d2d;
     color: white;
   }

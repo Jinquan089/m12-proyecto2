@@ -62,6 +62,7 @@ $user = $_SESSION['user'];
     </div>
       <img id="logo" src="../images/logo.png" alt="">
       <?php echo "Bienvenido " . $_SESSION['user'];?>
+      <button class="reserva" onclick="window.location = './reserva.php'">Reserva</button>
       <button class="historico" onclick="window.location = './historico.php'">Historial</button>
   </h1>
     <!-- Contenedor filtros -->
