@@ -55,8 +55,9 @@ CREATE TABLE tbl_historial (
     id_historial INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     fecha_hora_ocupado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_hora_libre TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado VARCHAR(255)L,
-    id_mesa INT,
+    estado VARCHAR(255),
+    id_user INT,
+    id_mesa INT
 );
 
 ALTER TABLE tbl_mesas
@@ -89,6 +90,10 @@ ADD CONSTRAINT fk_mesas_historial
 FOREIGN KEY (id_mesa)
 REFERENCES tbl_mesas(id_mesa);
 
+ALTER TABLE tbl_historial
+ADD CONSTRAINT fk_user_historial
+FOREIGN KEY (id_user)
+REFERENCES tbl_users(id_user);
 
 /*_________________________________ Roles _________________________________*/
 INSERT INTO tbl_roles VALUES (1,'admin');

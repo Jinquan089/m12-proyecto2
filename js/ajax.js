@@ -17,6 +17,7 @@ var tiposala = document.getElementById('dropdown1');
 tiposala.addEventListener('change', ()=> {
     saladato = tiposala.value;
     num_sala_silla(saladato);
+    actualizarLeyenda()
 })
 
 function num_sala_silla(valor){

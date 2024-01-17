@@ -10,6 +10,7 @@ if (!isset($_SESSION["user"])) {
 if (isset($_POST['id_mesa'])) {
     try {
         $idMesa = $_POST['id_mesa'];
+        $id_user = $_SESSION['id_user'];
         // Iniciamos la transacción
         $conn->beginTransaction();
 
@@ -44,10 +45,11 @@ if (isset($_POST['id_mesa'])) {
             $stmtOcupa->bindParam(':idMesa', $idMesa);
             $stmtOcupa->execute();
             $estado = "Ocupado";
-            $sqlInsertHistorial = "INSERT INTO tbl_historial (fecha_hora_libre, estado, id_mesa) VALUES (NULL, :estado, :id_mesa)";
+            $sqlInsertHistorial = "INSERT INTO tbl_historial (fecha_hora_libre, estado, id_mesa, id_user) VALUES (NULL, :estado, :id_mesa, :id_user)";
             $stmtInsertHistorial = $conn->prepare($sqlInsertHistorial);
             $stmtInsertHistorial->bindParam(':id_mesa', $idMesa);
             $stmtInsertHistorial->bindParam(':estado', $estado);
+            $stmtInsertHistorial->bindParam(':id_user', $id_user);
             $stmtInsertHistorial->execute();
         }
         // Commit de la transacción

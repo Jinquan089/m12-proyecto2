@@ -31,51 +31,18 @@ include './connection.php';
             <table cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Tipo de Sala</th>
+                        <th>Usuario</th>
                         <th>Mesa</th>
-                        <th>Ocupaciones</th>
+                        <th>Fecha de ocupacion</th>
+                        <th>Fecha de liberacion</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php
-                    try {
-                        $selesala = "SELECT DISTINCT me.nombre_mesa, tisa.nombre_tipos ,sa.nombre_sala FROM tbl_historial hi
-                        INNER JOIN tbl_mesas me ON me.id_mesa = hi.id_mesa
-                        INNER JOIN tbl_salas sa ON sa.id_sala = hi.id_sala
-                        INNER JOIN tbl_tipos_salas tisa ON tisa.id_tipos = sa.id_tipos_sala";
-
-                        $stmt1 = $conn->prepare($selesala);
-                        $stmt1->execute();
-                        $resultsala = $stmt1->fetchAll(PDO::FETCH_ASSOC);
-
-                        if ($stmt1->rowCount() > 0) {
-                            foreach ($resultsala as $row) {
-                                $selecount = "SELECT me.nombre_mesa FROM tbl_historial hi
-                                INNER JOIN tbl_mesas me ON me.id_mesa = hi.id_mesa
-                                INNER JOIN tbl_salas sa ON sa.id_sala = hi.id_sala
-                                INNER JOIN tbl_tipos_salas tisa ON tisa.id_tipos = sa.id_tipos_sala WHERE hi.estado = 'Ocupado' AND me.nombre_mesa = :mesa";
-
-                                $stmt2 = $pdo->prepare($selecount);
-                                $stmt2->bindParam(":mesa", $row['nombre_mesa']);
-                                $stmt2->execute();
-                                $count = $stmt2->rowCount();
-
-                                echo "<tr>";
-                                echo "<td>" . $row['nombre_tipos'] . "  " . $row['nombre_sala'] . "</td>";
-                                echo "<td>" . $row['nombre_mesa'] . "</td>";
-                                echo "<td>" . $count . "</td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='6'>No hay historico</td></tr>";
-                        }
-                    } catch (Exception $e) {
-                        echo "Error: " . $e->getMessage() . "<br>";
-                    }
-                    ?>
+                <tbody id="historial">
                 </tbody>
             </table>
         </div>
     </div>
+    <script src="../js/historial.js"></script>
 </body>
 </html>
