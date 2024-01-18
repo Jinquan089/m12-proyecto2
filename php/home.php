@@ -61,9 +61,20 @@ $user = $_SESSION['user'];
       <button class="return-button" onclick="window.location = './cerrar.php'"><img src="../images/LOGOUT.PNG" width='27px'></button>
     </div>
       <img id="logo" src="../images/logo.png" alt="">
-      <?php echo "Bienvenido " . $_SESSION['user'];?>
-      <button class="reserva" onclick="window.location = './reserva.php'">Reserva</button>
-      <button class="historico" onclick="window.location = './historico.php'">Historial</button>
+      <?php echo "Bienvenido " . $_SESSION['user'];
+      
+      if ($_SESSION['user'] == "admin") {
+        ?>  <button class="usuario" onclick="window.location = './usuarios.php'">Usuarios</button>
+            <button class="historico" onclick="window.location = './recurso.php'">Recurso</button>
+            <button class="historico" onclick="window.location = './historico.php'">Historial</button>
+            <?php
+      } else {
+        ?>
+            <button class="usuario" onclick="window.location = './historico.php'">Historial</button>
+        <?php
+      }
+      ?>
+            <button class="reserva" onclick="window.location = './reserva.php'">Reserva</button>
   </h1>
     <!-- Contenedor filtros -->
     <div class="container-dropdown">
@@ -73,7 +84,7 @@ $user = $_SESSION['user'];
           <label for="dropdown1">Sala</label>
           <!-- Selector para sala -->
           <select id="dropdown1" name="sala">
-            <option selected disabled>Seleccione una sala</option>
+            <option selected disabled>Tipo de Sala</option>
           </select>
         </div>
         <!-- Acaba el selector para sala -->
@@ -81,20 +92,20 @@ $user = $_SESSION['user'];
         <div class="dropdown">
           <label for="dropdown2">Num. Sala</label>
           <select id="dropdown2" name="num_sala">
-            <option selected disabled>Seleccione una sala</option>
+            <option selected disabled>Numero de sala</option>
           </select>
         </div>
         <!-- Acaba el numero de sala -->
         <div class="dropdown">
           <label for="dropdown3">Mesa</label>
           <select id="dropdown3" name="mesa">
-            <option selected disabled>Seleccione una mesa</option>
+            <option selected disabled>Numero de persona</option>
           </select>
         </div>
         <div class="dropdown">
           <label for="dropdown4">Ocupación</label>
           <select id="dropdown4" name="estado">
-            <option selected disabled>Seleccione el estado</option>
+            <option selected disabled>Estado de la mesa</option>
           </select>
         </div>
         <div class="dropdown">

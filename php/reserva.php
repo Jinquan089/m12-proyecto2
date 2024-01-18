@@ -31,21 +31,36 @@ include './connection.php';
             <form action="" method="POST">
                 <input type="text" name="nombre" id="nombre"><br>
                 <select name="tiposala" id="tiposala">
-                    <option value=""></option>
+                    <option selected disabled>Seleccione una sala</option>
                 </select><br>
                 <select name="personas" id="personas">
-                    <option value="2">2</option>
+                    <option selected disabled>Numero de personas</option>
                 </select><br>
-                <select name="tiempo" id="tiempo">
-                    <option value=""></option>
+                <select name="hora" id="hora">
+                    <option disabled selected>Hora</option>
+                    <option value="13">13:00</option>
+                    <option value="14">14:00</option>
+                    <option value="15">15:00</option>
+                    <option value="19">19:00</option>
+                    <option value="20">20:00</option>
+                    <option value="21">21:00</option>
                 </select><br>
+                    <input type="date" id="fecha" name="fecha"><br>
                 <select name="mesa" id="mesa">
-                    <option value=""></option>
+                    <option selected disabled>Mesa</option>
                 </select><br>
                 <input type="button" value="Enviar">
             </form>
         </div>
     </div>
-    <script src="../js/reserva.js"></script>
+
 </body>
 </html>
+<script>
+    var hoy = new Date();
+    var semanaDespues = new Date();
+    semanaDespues.setDate(hoy.getDate() + 7);
+    document.getElementById('fecha').min = hoy.toISOString().split('T')[0];
+    document.getElementById('fecha').max = semanaDespues.toISOString().split('T')[0];
+</script>
+<script src="../js/reserva.js"></script>

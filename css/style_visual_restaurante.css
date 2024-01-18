@@ -314,7 +314,7 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
-    margin-left: 50vh;
+    margin-left: 1vh;
   }
 
   .reserva:hover {
@@ -322,4 +322,20 @@
     color: white;
   }
 
+  .usuario{
+    padding: 20px 25px;
+    background-color: #d3d3d3e8;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-left: 40vh;
+  }
+
+  .usuario:hover {
+    background-color: #2d2d2d;
+    color: white;
+  }
   /* ------------------------------------------------------------------------------------------------------------------------------------------ */

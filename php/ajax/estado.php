@@ -11,7 +11,7 @@ try {
     $stmtEstados->execute();
     $resultEstados = $stmtEstados->fetchAll(PDO::FETCH_ASSOC);
     // Iterar sobre los resultados y generar las opciones del dropdown
-    $options = '<option selected disabled>Seleccione el estado</option>';
+    $options = '<option selected disabled>Estado de la mesa</option>';
     foreach ($resultEstados as $rowEstado) {
     $nombreEstado = $rowEstado['estado_nombre'];
     $options .='<option value="' . $nombreEstado . '">' . $nombreEstado . '</option>';

@@ -1,17 +1,17 @@
 /*______________________________________TIPO SALA______________________________________*/
-    var resultado = document.getElementById('dropdown1');
-    var ajax = new XMLHttpRequest();
-    ajax.open('POST', '../php/ajax/tipo_sala.php');
-    ajax.onload = function(){
-        if(ajax.status == 200){
-            resultado.innerHTML = "";
-            var json = JSON.parse(ajax.responseText);
-            resultado.innerHTML = json;
-        } else{
-            resultado.innerText = "Error"; 
-        }
+var resultado = document.getElementById('dropdown1');
+var ajax = new XMLHttpRequest();
+ajax.open('POST', '../php/ajax/tipo_sala.php');
+ajax.onload = function(){
+    if(ajax.status == 200){
+        resultado.innerHTML = "";
+        var json = JSON.parse(ajax.responseText);
+        resultado.innerHTML = json;
+    } else{
+        resultado.innerText = "Error"; 
     }
-    ajax.send();
+}
+ajax.send();
 
 var tiposala = document.getElementById('dropdown1');
 tiposala.addEventListener('change', ()=> {
@@ -122,19 +122,19 @@ function leyenda_mesa(valor1, valor2, valor3, valor4) {
 
     var formdata = new FormData();
     var formdata2 = new FormData();
-    if (valor1 && valor1 !== "Seleccione una sala") {
+    if (valor1 && valor1 !== "Tipo de Sala") {
         formdata.append('tipo_sala', valor1);
         formdata2.append('tipo_sala', valor1);
     }
-    if (valor2 && valor2 !== "Seleccione una sala") {
+    if (valor2 && valor2 !== "Numero de sala") {
         formdata.append('num_sala', valor2);
         formdata2.append('num_sala', valor2);
     }
-    if (valor3 && valor3 !== "Seleccione una mesa") {
+    if (valor3 && valor3 !== "Numero de persona") {
         formdata.append('mesa', valor3);
         formdata2.append('mesa', valor3);
     }
-    if (valor4 && valor4 !== "Seleccione el estado") {
+    if (valor4 && valor4 !== "Estado de la mesa") {
         formdata.append('estado', valor4);
         formdata2.append('estado', valor4);
     }

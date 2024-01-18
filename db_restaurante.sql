@@ -1,7 +1,5 @@
 DROP DATABASE db_restaurante;
-
 CREATE DATABASE db_restaurante;
-
 USE db_restaurante;
 
 /* Tabla de roles */
@@ -62,14 +60,13 @@ CREATE TABLE tbl_historial (
 
 CREATE TABLE tbl_reserva (
     id_reserva INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    fecha_hora_reserva TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    duracion INT,
+    nombre_persona VARCHAR(255),
     num_personas INT,
-    id_user_reserva INT,
+    hora TIMESTAMP,
     id_mesa_reservada INT,
-    FOREIGN KEY (id_user_reserva) REFERENCES tbl_users(id_user),
-    FOREIGN KEY (id_mesa_reservada) REFERENCES tbl_mesas(id_mesa)
+    fecha_reserva TIMESTAMP
 );
+
 
 ALTER TABLE tbl_mesas
 ADD CONSTRAINT fk_salas_mesas
@@ -106,6 +103,17 @@ ADD CONSTRAINT fk_user_historial
 FOREIGN KEY (id_user)
 REFERENCES tbl_users(id_user);
 
+ALTER TABLE tbl_reserva
+ADD CONSTRAINT fk_reserva_user
+FOREIGN KEY (id_user_reserva)
+REFERENCES tbl_users(id_user);
+
+ALTER TABLE tbl_reserva
+ADD CONSTRAINT fk_reserva_mesa
+FOREIGN KEY (id_mesa_reservada)
+REFERENCES tbl_mesas(id_mesa);
+
+
 /*_________________________________ Roles _________________________________*/
 INSERT INTO tbl_roles VALUES (1,'admin');
 INSERT INTO tbl_roles VALUES (2,'camarero');
@@ -132,18 +140,6 @@ INSERT INTO tbl_salas VALUES (7,3,'2');
 INSERT INTO tbl_salas VALUES (8,3,'3');
 INSERT INTO tbl_salas VALUES (9,3,'4');
 /* _________________________________ Usuarios _________________________________*/
-
-CREATE TABLE tbl_users(
-    id_user INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    user VARCHAR(255) NOT NULL,
-    nombre VARCHAR(255),
-    apellido1 VARCHAR(255),
-    apellido2 VARCHAR(255),
-    contra VARCHAR(255),
-    correo VARCHAR(255) NOT NULL,
-    telefono INT(255) NOT NULL,
-    rol INT NOT NULL
-);
 
 INSERT INTO tbl_users VALUES (1,'Admin', 'Admin', 'Supremo', '', '$2y$10$eQV9jOJPHQq9X/gY.LUCb.LxlmQaSwyHLOT88AEyQ/55UggDpEbd6', 'admin@gmail.com', 123456789, 1);
 INSERT INTO tbl_users VALUES (2,'Alberto', 'Hank', 'Bermejo', 'Nuñez', '$2y$10$AaLco/MRdphg960EbWCmkO40QRcBTrOlcVOlmT3sxpxaBoOKp.E1q', 'abermejo@escolagoar.cat', 690621200, 2);
