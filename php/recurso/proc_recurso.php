@@ -20,8 +20,9 @@ try {
         $options .= "<td>" . $row['tipo_sala'] . "</td>";
         $options .= "<td>" . $row['sala'] . "</td>";
         $options .= "<td>" . $row['nombre_mesa'] . "</td>";
-        $options .= "<td>" . $row['sillas'] . "</td>";
+        $options .= "<td class='sillas-cell'>" . $row['sillas'] . "</td>";
         $options .= "<td>" . $row['estado'] . "</td>";
+        $options .= "<td class='actions-cell'><button type='button' class='btn btn-warning'>Modificar</button></td>";
         $options .= "</tr>";
     }
 echo json_encode($options);

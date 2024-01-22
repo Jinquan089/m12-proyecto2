@@ -40,7 +40,6 @@ function num_silla(valor){
     
     resultado.addEventListener('change', ()=> {
         silla = resultado.value;
-        
         var hora = document.getElementById('hora');
         var fecha = document.getElementById('fecha');
         hora.addEventListener('change', FechaHora);
@@ -53,22 +52,16 @@ function num_silla(valor){
                 mesa(valor,silla,datahora,datafecha)
             }
         }
-        FechaHora();
     })
 }
 
 function mesa(valor1, valor2, valor3, valor4) {
-    console.log(valor1);
-    console.log(valor2);
-    console.log(valor3);
-    console.log(valor4);
-}
-
-/* function mesa(valor1, valor2, valor3, valor4) {
     var resultado = document.getElementById('mesa');
     var formdata = new FormData();
     formdata.append('tipo_sala',valor1);
     formdata.append('silla',valor2);
+    formdata.append('hora',valor3);
+    formdata.append('fecha',valor4);
     var ajax = new XMLHttpRequest();
     ajax.open('POST', '../php/reserva/proc_mesa.php');
     ajax.onload = function(){
@@ -81,4 +74,42 @@ function mesa(valor1, valor2, valor3, valor4) {
         }
     }
     ajax.send(formdata);
-} */
+}
+
+var enviar = document.getElementById('frmReserva');
+enviar.addEventListener('submit', (event)=> {
+    event.preventDefault();
+    var nombre = document.getElementById("nombre").value;
+    var silla = document.getElementById("personas").value;
+    var hora = document.getElementById("hora").value;
+    var fecha = document.getElementById("fecha").value;
+    var mesa = document.getElementById("mesa").value;
+
+    reserva(nombre,silla,hora,fecha,mesa);
+})
+
+function reserva(valor1,valor2,valor3,valor4,valor5) {
+    var resultado = document.getElementById('mesa');
+    var formdata = new FormData();
+    formdata.append('nomCli',valor1);
+    formdata.append('silla',valor2);
+    formdata.append('hora',valor3);
+    formdata.append('fecha',valor4);
+    formdata.append('mesa',valor5);
+    var ajax = new XMLHttpRequest();
+    ajax.open('POST', '../php/reserva/proc_reserva.php');
+    ajax.onload = function(){
+        if(ajax.status == 200){
+            Swal.fire({
+                title: "Reservado",
+                text: "Reserva hecho",
+                icon: "success"
+              });
+            document.getElementById('frmReserva').reset();
+            document.getElementById('mesa').innerHTML = "<option selected disabled>Mesa</option>"
+        } else {
+            resultado.innerText = "Error"; 
+        }
+    }
+    ajax.send(formdata);
+}

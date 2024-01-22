@@ -21,29 +21,35 @@ if (!isset($_SESSION["user"])) {
 <body>
     <div class="statistics-container">
         <div class="responsive-flex">
-            <button class="return-button" onclick="window.location = './home.php'">
-                <img src="../images/LOGOUT.PNG" width='27px'>
-            </button>
-            <img id="logo" src="../images/logo.png" alt="">
+            <button class="return-button" onclick="window.location = './home.php'"><img src="../images/LOGOUT.PNG" width='27px'></button>
+            <img id="logo" src="../images/logo.png" alt="logo">
         </div>
         <div class="statistics-list-container">
-            <table cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Usuario</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Apellido2</th>
-                        <th>Correo</th>
-                        <th>telefono</th>
-                        <th>rol</th>
-                    </tr>
-                </thead>
-                <tbody id="usuarios">
-                </tbody>
-            </table>
+            <div class="contenedor">
+                <div id="modificar">
+                </div>
+                <div class="columna2">
+                    <table cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Apellido2</th>
+                                <th>Correo</th>
+                                <th>telefono</th>
+                                <th>rol</th>
+                                <th>Modificar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usuarios">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-    <script src="../js/crud_usuario.js"></script>
+<script src="../js/crud_usuario.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

@@ -27,19 +27,26 @@ if (!isset($_SESSION["user"])) {
             <img id="logo" src="../images/logo.png" alt="">
         </div>
         <div class="statistics-list-container">
-            <table cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Tipo de sala</th>
-                        <th>Numero de sala</th>
-                        <th>Nombre de mesa</th>
-                        <th>Sillas</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody id="recurso">
-                </tbody>
-            </table>
+            <div class="contenedor">
+                <div id="modificar">
+                </div>
+                <div class="columna2">
+                    <table cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Tipo de sala</th>
+                                <th>Numero de sala</th>
+                                <th>Nombre de mesa</th>
+                                <th>Sillas</th>
+                                <th>Estado</th>
+                                <th>Modificar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recurso">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <script src="../js/crud_recurso.js"></script>

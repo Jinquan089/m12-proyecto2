@@ -28,7 +28,7 @@ include './connection.php';
             <img id="logo" src="../images/logo.png" alt="">
         </div>
         <div class="statistics-list-container">
-            <form action="" method="POST">
+            <form action="" method="POST" id="frmReserva">
                 <input type="text" name="nombre" id="nombre"><br>
                 <select name="tiposala" id="tiposala">
                     <option selected disabled>Seleccione una sala</option>
@@ -49,11 +49,11 @@ include './connection.php';
                 <select name="mesa" id="mesa">
                     <option selected disabled>Mesa</option>
                 </select><br>
-                <input type="button" value="Enviar">
+                <input type="submit" value="Enviar" id="enviar">
             </form>
+            <div id="crdreservados"></div>
         </div>
     </div>
-
 </body>
 </html>
 <script>
@@ -64,3 +64,4 @@ include './connection.php';
     document.getElementById('fecha').max = semanaDespues.toISOString().split('T')[0];
 </script>
 <script src="../js/reserva.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

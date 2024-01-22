@@ -62,9 +62,9 @@ CREATE TABLE tbl_reserva (
     id_reserva INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nombre_persona VARCHAR(255),
     num_personas INT,
-    hora TIMESTAMP,
+    hora TIME,
     id_mesa_reservada INT,
-    fecha_reserva TIMESTAMP
+    fecha_reserva DATE
 );
 
 

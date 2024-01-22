@@ -103,6 +103,21 @@ table tr:hover {
   margin-left: 450px;
 }
 
+.contenedor {
+  display: flex;
+}
+
+.columna1 {
+  flex: 1;
+  padding: 10px;
+}
+
+.columna2 {
+  flex: 4;
+  padding: 10px;
+}
+
+
 /* ----------------------------------------------------------------------------------- */
 
 /* Media query para pantallas de 400x658 */
