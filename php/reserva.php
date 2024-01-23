@@ -28,30 +28,59 @@ include './connection.php';
             <img id="logo" src="../images/logo.png" alt="">
         </div>
         <div class="statistics-list-container">
+        <div class="contenedor">
+        <div class="columna3 card">
             <form action="" method="POST" id="frmReserva">
-                <input type="text" name="nombre" id="nombre"><br>
-                <select name="tiposala" id="tiposala">
-                    <option selected disabled>Seleccione una sala</option>
-                </select><br>
-                <select name="personas" id="personas">
-                    <option selected disabled>Numero de personas</option>
-                </select><br>
-                <select name="hora" id="hora">
-                    <option disabled selected>Hora</option>
-                    <option value="13">13:00</option>
-                    <option value="14">14:00</option>
-                    <option value="15">15:00</option>
-                    <option value="19">19:00</option>
-                    <option value="20">20:00</option>
-                    <option value="21">21:00</option>
-                </select><br>
-                    <input type="date" id="fecha" name="fecha"><br>
-                <select name="mesa" id="mesa">
-                    <option selected disabled>Mesa</option>
-                </select><br>
-                <input type="submit" value="Enviar" id="enviar">
+                <div class='form-group'>
+                    <input type="text" name="nombre" id="nombre" class='form-control' placeholder="Nombre">
+                </div><br>
+                <div class='form-group'>
+                    <select name="tiposala" id="tiposala" class='form-control'>
+                        <option selected disabled>Seleccione una sala</option>
+                    </select></div><br>
+                <div class='form-group'>
+                    <select name="personas" id="personas" class='form-control'>
+                        <option selected disabled>Numero de personas</option>
+                    </select></div><br>
+                <div class='form-group'>
+                    <select name="hora" id="hora" class='form-control'>
+                        <option disabled selected>Hora</option>
+                        <option value="13">13:00</option>
+                        <option value="14">14:00</option>
+                        <option value="15">15:00</option>
+                        <option value="19">19:00</option>
+                        <option value="20">20:00</option>
+                        <option value="21">21:00</option>
+                    </select></div><br>
+                <div class='form-group'>
+                    <input type="date" id="fecha" name="fecha" class='form-control'>
+                </div><br>
+                <div class='form-group'>
+                    <select name="mesa" id="mesa" class='form-control'>
+                        <option selected disabled>Mesa</option>
+                    </select>
+                </div><br>
+                <div class='form-group'>
+                    <input type="submit" value="Enviar" id="enviar" class='form-control'>
+                </div>
             </form>
-            <div id="crdreservados"></div>
+            </div>
+            <div class="columna2">
+                    <table cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Numero Personas</th>
+                                <th>Hora</th>
+                                <th>Fecha</th>
+                                <th>Mesa</th>
+                                <th>Cancelar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crdreservados">
+                        </tbody>
+            </div>
+        </div>
         </div>
     </div>
 </body>

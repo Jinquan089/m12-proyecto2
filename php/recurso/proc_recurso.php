@@ -7,7 +7,7 @@ if (!isset($_SESSION["user"])) {
 }
 
 try {
-    $stmt = $conn->prepare("SELECT me.nombre_mesa AS nombre_mesa, me.sillas AS sillas, sa.nombre_sala AS sala, tisa.nombre_tipos AS tipo_sala, es.estado_nombre AS estado 
+    $stmt = $conn->prepare("SELECT me.id_mesa AS id_mesa, me.nombre_mesa AS nombre_mesa, me.sillas AS sillas, sa.nombre_sala AS sala, tisa.nombre_tipos AS tipo_sala, es.estado_nombre AS estado 
     FROM tbl_mesas me
     INNER JOIN tbl_salas sa ON me.id_sala_mesa = sa.id_sala
     INNER JOIN tbl_tipos_salas tisa ON sa.id_tipos_sala = tisa.id_tipos
@@ -16,13 +16,15 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $options = '';
     foreach ($result as $row) {
+        $id_mesa = $row['id_mesa'];
         $options .= "<tr>";
+        $options .= "<input type='hidden' name='id_mesa' id='$id_mesa' class='id-recurso'>";
         $options .= "<td>" . $row['tipo_sala'] . "</td>";
         $options .= "<td>" . $row['sala'] . "</td>";
         $options .= "<td>" . $row['nombre_mesa'] . "</td>";
-        $options .= "<td class='sillas-cell'>" . $row['sillas'] . "</td>";
+        $options .= "<td class='sillas-cell id-recurso'>" . $row['sillas'] . "</td>";
         $options .= "<td>" . $row['estado'] . "</td>";
-        $options .= "<td class='actions-cell'><button type='button' class='btn btn-warning'>Modificar</button></td>";
+        $options .= "<td class='actions-cell'><button type='button' class='btn btn-warning edit-button'>Modificar</button></td>";
         $options .= "</tr>";
     }
 echo json_encode($options);

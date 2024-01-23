@@ -7,23 +7,11 @@ if (!isset($_SESSION["user"])) {
 }
 
 try {
-    $id_user = $_POST['id_user'];
-    $user = $_POST['user'];
-    $nombre = $_POST['nombre'];
-    $ape1 = $_POST['ape1'];
-    $ape2 = $_POST['ape2'];
-    $correo = $_POST['correo'];
-    $telf = $_POST['telf'];
-    $stmt = $conn->prepare("UPDATE tbl_users SET 
-    user = :user, nombre = :nombre, apellido1 = :ape1 ,apellido2 = :ape2,correo = :correo ,telefono = :telf 
-    WHERE id_user = :id_user");
-    $stmt->bindParam(":id_user", $id_user);
-    $stmt->bindParam(":user", $user);
-    $stmt->bindParam(":nombre", $nombre);
-    $stmt->bindParam(":ape1", $ape1);
-    $stmt->bindParam(":ape2", $ape2);
-    $stmt->bindParam(":correo", $correo);
-    $stmt->bindParam(":telf", $telf);
+    $id_mesa = $_POST['id_mesa'];
+    $sillas = $_POST['sillas'];
+    $stmt = $conn->prepare("UPDATE `tbl_mesas` SET `sillas` = :sillas WHERE `id_mesa` = :id_mesa;");
+    $stmt->bindParam(":id_mesa", $id_mesa);
+    $stmt->bindParam(":sillas", $sillas);
     $stmt->execute();
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage() . "<br>";

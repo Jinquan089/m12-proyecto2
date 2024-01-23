@@ -12,6 +12,8 @@ ajax.onload = function(){
 }
 ajax.send();
 
+crudreserva('');
+
 var tiposala = document.getElementById('tiposala');
 tiposala.addEventListener('change', ()=> {
     var mesa = document.getElementById('mesa');
@@ -107,9 +109,51 @@ function reserva(valor1,valor2,valor3,valor4,valor5) {
               });
             document.getElementById('frmReserva').reset();
             document.getElementById('mesa').innerHTML = "<option selected disabled>Mesa</option>"
+            crudreserva();
         } else {
             resultado.innerText = "Error"; 
         }
     }
     ajax.send(formdata);
 }
+
+function crudreserva() {
+    var resultado = document.getElementById("crdreservados");
+    var ajax = new XMLHttpRequest();
+    ajax.open('POST', '../php/reserva/crud_reserva.php');
+    ajax.onload = function(){
+        if(ajax.status == 200){
+            resultado.innerHTML = "";
+            var json = JSON.parse(ajax.responseText);
+            resultado.innerHTML = json;
+        } else{
+            resultado.innerText = "Error"; 
+        }
+        document.querySelectorAll('.btn-warning').forEach(function(boton) {
+                boton.addEventListener('click', function() {
+                var idBoton = boton.id;
+                cancelar(idBoton);
+            });
+        });
+    }
+    ajax.send();
+}
+
+function cancelar(id_reser) {
+    var formdata = new FormData;
+    formdata.append('id_reser', id_reser);
+    var ajax = new XMLHttpRequest();
+    ajax.open('POST', '../php/reserva/cancelar.php');
+    ajax.onload = function(){
+        if(ajax.status == 200){
+            Swal.fire({
+                title: "Cancelado",
+                text: "Cancelacion hecho",
+                icon: "success"
+              });
+            crudreserva();
+        }
+    }
+    ajax.send(formdata);
+}
+

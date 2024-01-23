@@ -50,5 +50,6 @@ if (!isset($_SESSION["user"])) {
         </div>
     </div>
     <script src="../js/crud_recurso.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

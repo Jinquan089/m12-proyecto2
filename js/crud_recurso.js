@@ -18,11 +18,9 @@ function recargar() {
 }
 
 function addEditEventToButtons() {
-    var editButtons = document.querySelectorAll('.edit-button');
-    console.log(editButtons);
-    editButtons.forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            var row = event.target.closest('tr');
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', () => {
+            var row = button.closest('tr');
             var sillasCell = row.querySelector('.sillas-cell');
             var sillasValue = sillasCell.textContent;
 
@@ -30,44 +28,50 @@ function addEditEventToButtons() {
             sillasCell.innerHTML = `<input type="number" value="${sillasValue}" id="editedSillas">`;
 
             // Agrega un botón "Guardar" a la fila
-            var saveButton = document.createElement('button');
-            saveButton.textContent = 'Guardar';
-            saveButton.addEventListener('click', function () {
-                // Obtiene el nuevo valor de sillas
-                var editedSillas = document.getElementById('editedSillas').value;
+            var saveButton = createSaveButton(row);
 
-                // Obtiene el id del recurso
-                var idRecurso = row.querySelector('.id-recurso').textContent;
-
-                // Realiza la solicitud AJAX para modificar el recurso
-                var ajaxModificar = new XMLHttpRequest();
-                ajaxModificar.open('POST', '../php/recurso/modificar.php');
-                ajaxModificar.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                ajaxModificar.onload = function () {
-                    if (ajaxModificar.status == 200) {
-                        Swal.fire({
-                            title: "Modificado",
-                            text: "Modificado Correctamente",
-                            icon: "success"
-                        });
-
-                        // Después de guardar, recarga la tabla
-                        recargar();
-                    } else {
-                        resultado.innerText = "Error";
-                    }
-                };
-
-                // Envía los datos necesarios al servidor
-                var data = 'id=' + idRecurso + '&sillas=' + editedSillas;
-                ajaxModificar.send(data);
-            });
-
-            // Agrega el botón "Guardar" a la celda de acciones
+            // Agrega el botón "Guardar" a la celda de acciones y elimina el botón "Modificar"
+            row.querySelector('.actions-cell').innerHTML = '';
             row.querySelector('.actions-cell').appendChild(saveButton);
         });
     });
 }
 
-// Llama a recargar para cargar la tabla al cargar la página
+function createSaveButton(row) {
+    var saveButton = document.createElement('button');
+    saveButton.textContent = 'Guardar';
+    saveButton.classList.add('btn', 'btn-success');
+    saveButton.addEventListener('click', () => {
+        var editedSillas = document.getElementById('editedSillas').value;
+        var idMesaInput = row.querySelector('.id-recurso');
+        var idMesa = idMesaInput.id;
+        sendAjaxRequest(idMesa, editedSillas);
+    });
+
+    return saveButton;
+}
+
+function sendAjaxRequest(idMesa, editedSillas) {
+    var formdata = new FormData
+    formdata.append('id_mesa', idMesa)
+    formdata.append('sillas', editedSillas)
+    var ajaxModificar = new XMLHttpRequest();
+    ajaxModificar.open('POST', '../php/recurso/modificar.php');
+    ajaxModificar.onload = function () {
+        if (ajaxModificar.status === 200) {
+            Swal.fire({
+                title: "Modificado",
+                text: "Modificado Correctamente",
+                icon: "success"
+            });
+            recargar();
+        } else {
+            resultado.innerText = "Error";
+        }
+    };
+    ajaxModificar.send(formdata);
+}
+
+
+
 recargar();
